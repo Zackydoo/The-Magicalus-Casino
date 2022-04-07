@@ -1,0 +1,3 @@
+1: Copy over the code from the old repl(DONE)
+2: Make the new lottery system
+3: Work on adjustable payouts for slots
