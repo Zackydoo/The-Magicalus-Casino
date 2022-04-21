@@ -1,4 +1,0 @@
-1: Copy over the code from the old repl[DONE]
-2: Make the new lottery system
-3: Work on adjustable payouts for slots/all things at once.(Maybe different difficulty wings?)
-4: Add threading so there can be achievements, a win condition that isn't a pain to check for, a lose condition, etc.
