@@ -1,0 +1,5 @@
+Add in the system for secret achievements
+Maybe add in hidden ahcievements? (As in you don't know they exist, not you dont know what to do for them.)
+Finish the goddamn lottery
+Implement secret achievement Computers Count From 0 (ugh now I have to rework the slot machine AGAIN)
+To go with that, implememnt secret achievement You won?
