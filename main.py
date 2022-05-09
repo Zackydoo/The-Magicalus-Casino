@@ -1,9 +1,13 @@
 import random
 import time
+import math
 from os import system, name
 bal=50
 handval=0
 done=False
+singdc=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51]
+doubdc=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103]
+slotpos=[0,1,2,3,4,5,6,7,8]
 def clear(): 
     if name=="nt": 
         system("cls") 
@@ -11,10 +15,6 @@ def clear():
         system("clear")
 def randgen():
   return time.time()*1000
-def lottonumbers():
-  random.seed(randgen())
-  return random.randint(0,99)
-cards=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51]
 suitsp=[" of Hearts"," of Diamonds"," of Spades"," of Clubs"]
 suits=[0,1,2,3]
 denomsp=["Ace","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Jack","Queen","King"]
@@ -31,8 +31,8 @@ def drawcard():
     draw-=13
   return [denomsp[draw],suitsp[suit],draw,suit]
 def shuffle():
-  if len(cards)<=13 and game=="blackjack":
-    return [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103]
+  if len(cards)<=26 and game=="blackjack":
+    return doubdc
   elif len(cards)<=13:
     return [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51]
   else:
@@ -110,33 +110,26 @@ while True:
       s3t=random.randint(54,69)
       slotodds=[0,1,2,3,4,5]
       weights=[0.1,5,4,3,2,1]
-      slot1=random.randint(1,5)
-      slot2=random.randint(1,5)
-      slot3=random.randint(1,5)
-      slot1p=random.randint(1,5)
-      slot2p=random.randint(1,5)
-      slot3p=random.randint(1,5)
-      slot1n=random.randint(1,5)
-      slot2n=random.randint(1,5)
-      slot3n=random.randint(1,5)
+      i=0
+      while i<=8:
+        slotpos[i]=random.randint(1,5)
+        i+=1
       winning=-1
       while True:
         if s1t>runtime:
-          slot1p=slot1
-          slot1=slot1n
-          slot1n=random.choices(slotodds,weights)
-          slot1n=int(str(slot1n[0]).replace("[",""). replace("]",""))
+          slotpos[3]=slotpos[0]
+          slotpos[0]=slotpos[6]
+          slotpos[6]=int(str(random.choices(slotodds,weights)[0
+                         ]).replace("[",""). replace("]",""))
         if s2t>runtime:
-          slot2p=slot2
-          slot2=slot2n
-          slot2n=random.choices(slotodds,weights)
-          slot2n=int(str(slot2n[0]).replace("[",""). replace("]",""))
+          slotpos[4]=slotpos[1]
+          slotpos[1]=slotpos[7]
+          slotpos[7]=int(str(random.choices(slotodds,weights)[0]).replace("[",""). replace("]",""))
         if s3t>runtime:
-          slot3p=slot3
-          slot3=slot3n
-          slot3n=random.choices(slotodds,weights)
-          slot3n=int(str(slot3n[0]).replace("[",""). replace("]",""))
-        print("╔═════╤═════╤═════╗\n║     |     |     ║\n║ ["+str(slot1n)+"] | ["+str(slot2n)+"] | ["+str(slot3n)+"] ║\n║     |     |     ║\n║     |     |     ║\n║ ["+str(slot1)+"] | ["+str(slot2)+"] | ["+str(slot3)+"] ║\n║     |     |     ║\n║     |     |     ║\n║ ["+str(slot1p)+"] | ["+str(slot2p)+"] | ["+str(slot3p)+"] ║\n║     |     |     ║\n╚═════╧═════╧═════╝")
+          slotpos[5]=slotpos[2]
+          slotpos[2]=slotpos[8]
+          slotpos[8]=int(str(random.choices(slotodds,weights)[0]).replace("[",""). replace("]",""))
+        print("╔═════╤═════╤═════╗\n║     |     |     ║\n║ ["+str(slotpos[6])+"] | ["+str(slotpos[7])+"] | ["+str(slotpos[8])+"] ║\n║     |     |     ║\n║     |     |     ║\n║ ["+str(slotpos[0])+"] | ["+str(slotpos[1])+"] | ["+str(slotpos[2])+"] ║\n║     |     |     ║\n║     |     |     ║\n║ ["+str(slotpos[3])+"] | ["+str(slotpos[4])+"] | ["+str(slotpos[5])+"] ║\n║     |     |     ║\n╚═════╧═════╧═════╝")
         time.sleep(0.075)
         if s3t>runtime:
           clear()
@@ -146,22 +139,22 @@ while True:
       time.sleep(2)
       clear()
       slotwon=True
-      if slot1==slot2==slot3 or slot1n==slot2==slot3p or slot1p==slot2==slot3n:
-        winning=slot2
-      elif slot1n==slot2n==slot3n:
-        winning=slot2n
-      elif slot1p==slot2p==slot3p:
-        winning=slot2p
+      if slotpos[0]==slotpos[1]==slotpos[2] or slotpos[6]==slotpos[1]==slotpos[5] or slotpos[3]==slotpos[1]==slotpos[8]:
+        winning=slotpos[1]
+      elif slotpos[6]==slotpos[7]==slotpos[8]:
+        winning=slotpos[7]
+      elif slotpos[3]==slotpos[4]==slotpos[5]:
+        winning=slotpos[4]
       else:
         slotwon=False
-      if slot1==0 or slot1n==0 or slot1p==0 or slot2==0 or slot2n==0 or slot2p==0 or slot3==0 or slot3n==0 or slot3p==0:
+      if slotpos[0]==0 or slotpos[6]==0 or slotpos[3]==0 or slotpos[1]==0 or slotpos[7]==0 or slotpos[4]==0 or slotpos[2]==0 or slotpos[8]==0 or slotpos[5]==0:
         slot0check=1
-      if (slot1==0 or slot1==1) and (slot1n==0 or slot1n==1) and (slot1p==0 or slot1p==1) and (slot2==0 or slot2==1) and (slot2n==0 or slot2n==1) and (slot2p==0 or slot2p==1) and (slot3==0 or slot3==1) and (slot3n==0 or slot3n==1) and (slot3p==0 or slot3p==1):
+      if (slotpos[0]==0 or slotpos[0]==1) and (slotpos[6]==0 or slotpos[6]==1) and (slotpos[3]==0 or slotpos[3]==1) and (slotpos[1]==0 or slotpos[1]==1) and (slotpos[7]==0 or slotpos[7]==1) and (slotpos[4]==0 or slotpos[4]==1) and (slotpos[2]==0 or slotpos[2]==1) and (slotpos[8]==0 or slotpos[8]==1) and (slotpos[5]==0 or slotpos[5]==1):
         bincheck=True
       if winning==0:
         slot0check=2
-      if slot1==slot1n==slot1p==slot2==slot2n==slot2p==slot3==slot3n==slot3p:
-        if slot1==0:
+      if slotpos[0]==slotpos[6]==slotpos[3]==slotpos[1]==slotpos[7]==slotpos[4]==slotpos[2]==slotpos[8]==slotpos[5]:
+        if slotpos[0]==0:
           slot0check=3
         print("Congratulations! You got a full sweep of "+str(winning)+" Your winning number will be multiplied by three!")
         winning*=3
@@ -194,7 +187,7 @@ while True:
       back=input()
       if back=="back"or back=="Back":
         break
-      cards=shuffle()
+      cards=doubdc
       while True:
         handval=0
         end=[False,0]
@@ -219,23 +212,37 @@ while True:
         bal=bal-bet
         clear()
         print("Your current bet is: "+str(bet))
-        while True:
-          cards=shuffle()
-          drawn=drawcard()
-          print(drawn[0]+drawn[1])
-          handval+=drawn[2]+1
-          if handval>21:
-            print("You busted!")
-            end=[True,0]
-          if handval==21:
-            print("You got 21!")
-            end=[True,1]
-          play=input()
-          if play=="back" or play=="Back":
-            done=True
-          if end[0]==True:
-            clear()
-            break
+        initdraw1=drawcard()
+        print(initdraw1[0]+initdraw1[1])
+        initdraw2=drawcard()
+        print(initdraw2[0]+initdraw2[1])
+        handval+=initdraw1[2]+initdraw2[2]+2
+        if handval==21:
+          print("You got a natural blackjack!")
+          end=[True,2]
+        else:
+          while True:
+            cards=shuffle()
+            drawn=drawcard()
+            print(drawn[0]+drawn[1])
+            handval+=drawn[2]+1
+            if handval>21:
+              print("You busted!")
+              end=[True,0]
+            if handval==21:
+              print("You got 21!")
+              end=[True,1]
+            play=input()
+            if play=="back" or play=="Back":
+              done=True
+            if end[0]==True:
+              clear()
+              break
+        if end<0:
+          winnings=math.floor(bet*1.5)
+          print("You won "+str(winnings)+" Magicalus bucks!")
+          bal=bal+winnings
+          input()
   elif nav=="Achievements" or nav=="achievements":
     clear()
     i=0
