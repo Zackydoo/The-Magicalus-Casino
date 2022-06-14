@@ -1,6 +1,8 @@
 Add in the system for secret achievements[DONE]
 Implement secret achievement Computers Count From 0 (ugh now I have to rework the slot machine again)[FINALLY DONE]
-To go with that, implememnt secret achievement You won?
-And with that, add achievements Herd Mentality and Base 1
+To go with that, implememnt secret achievement You won?[Done]
+And with that, add achievements Herd Mentality and Base 1[Done]
 Add more achievements
-Add a win condition[WHY DOESNT IT PRINT PROPERLY AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA]
+Add a win condition(WHY DOESNT IT PRINT PROPERLY AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA)[ITS DONE FINALLLLLLY]
+Add endgame achievements
+Change achievment storage method(do SOON)

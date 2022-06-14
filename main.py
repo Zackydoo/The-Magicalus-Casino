@@ -2,12 +2,16 @@ import random
 import time
 import math
 from os import system, name
+won=False
 bal=50
 handval=0
+chandval=0
+acemods=0
 done=False
 singdc=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51]
 doubdc=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103]
 slotpos=[0,1,2,3,4,5,6,7,8]
+bjreg=100
 def clear(): 
     if name=="nt": 
         system("cls") 
@@ -29,16 +33,16 @@ def drawcard():
       continue
     suit+=1
     draw-=13
-  return [denomsp[draw],suitsp[suit],draw,suit]
+  return [denomsp[draw],suitsp[suit],draw+1,suit]
 def shuffle():
-  if len(cards)<=26 and game=="blackjack":
+  if len(cards)<=26 and (game=="blackjack"):
     return doubdc
   elif len(cards)<=13:
     return [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51]
   else:
     return cards
 class achievements:
-  def __init__(self,n,d,r,rp,rt,rq,a,sn,sd):
+  def __init__(self,n,d,r,rp,rt,rq,a):
     self.n=n
     self.d=d
     self.r=r
@@ -46,31 +50,23 @@ class achievements:
     self.rt=rt
     self.rq=rq
     self.a=a
-    self.sn=sn
-    self.sd=sd
 sweep=False
-herd=achievements("Herd Mentality", "Have every number in the slot machine be the same.",0,"Insert funny quip here","reward type","sweep==True",False,False,False)
-debt1=achievements("And So Began the Debt", "Go into debt.",0,"You don't get a prize for being bad at this.","none","bal<0",False,False,False)
-debt2=achievements("Crushing Debt", "Have 10,000 Magicalus Bucks of debt.",0,"Rewards aren't finished yet, screw you.","reward type", "bal<=-10000",False,False,False)
+herd=achievements("Herd Mentality", "Have every number in the slot machine be the same.",0,"Insert funny quip here","reward type","sweep==True",False)
+debt1=achievements("And So Began the Debt", "Go into debt.",0,"You don't get a prize for being bad at this.","none","bal<0",False)
+debt2=achievements("Crushing Debt", "Have 10,000 Magicalus Bucks of debt.",0,"Rewards aren't finished yet, screw you.","reward type", "bal<=-10000",False)
 bincheck=False
-bin=achievements("01001110 01100101 01110010 01100100 00101110", "Get all 1s and 0s on the slot machine.",0,"Binary joke here.","reward type","bincheck==True",False,True,False)
-rpscheck=False
-rps=achievements("Rotato Potato","Get a match on the slot machine vertically.",0,"Rotato Potato.","reward type","rpscheck==True",False,True,False)
+bin=achievements("01001110 01100101 01110010 01100100 00101110", "Get all 1s and 0s on the slot machine.",0,"Binary joke here.","reward type","bincheck==True",False)
+naecheck=False
+nae=achievements("Not an Elevator","Get a match on the slot machine vertically.",0,"Horizontal Progression! OOOOOOO!","reward type","naecheck==True",False)
 slot0check=False
-slot01=achievements("Computers Count From 0", "Have a 0 when the slot machine stops spinning.",0,"I haven't got an idea what to put here.","reward type","slot0check>=1",False,False,True)
-slot02=achievements("You win?", "Get a winning payout on the slot machines with 0s.",0,"I haven't got an idea what to put here.","reward type","slot0check>=2",False,False,True)
-slot03=achievements("Base 1", "Have every number on the final slot machine be a 0.",0,"I haven't got an idea what to put here.","reward type","slot0check>=3",False,False,True)
-achievementlist=[herd,debt1,debt2,bin,rps,slot01,slot02,slot03]
-unearned=[0,1,2,3,4,5,6]
+slot01=achievements("Computers Count From 0", "Have a 0 when the slot machine stops spinning.",0,"I haven't got an idea what to put here.","reward type","slot0check>=1",False)
+slot02=achievements("You win?", "Get a winning payout on the slot machines with 0s.",0,"I haven't got an idea what to put here.","reward type","slot0check>=2",False)
+slot03=achievements("Base 1", "Have every number on the final slot machine be a 0.",0,"I haven't got an idea what to put here.","reward type","slot0check>=3",False)
+achievementlist=[debt1,debt2,nae,slot01]
+egachievementlist=[slot02,slot03,bin,herd]
+unearned=[0,1,2]
+unearnedeg=[0,1,2,3]
 def achievecheck():
-  if len(unearned)==0 and won==False:
-    clear()
-    print("Congratulations! You have just completed The Magicalus Casino! I bet you feel pretty satisfied right now, eh? I hope you do, because that satisfaction is all you get.")
-    input()
-    clear()
-    return True
-  elif len(unearned)==0:
-    return True
   i=0
   while i<len(unearned):
     x=unearned[i]
@@ -82,6 +78,14 @@ def achievecheck():
         pass
       continue
     i+=1
+  if len(unearned)==0 and won==False:
+    clear()
+    print("Congratulations! You have just completed The Magicalus Casino! I bet you feel pretty satisfied right now, eh? I hope you do, because that satisfaction is all you get. Also, I have some good news! There's more. Like, a lot more. Good luck!")
+    input()
+    clear()
+    return True
+  elif len(unearned)==0:
+    return True
   return False
 clear()
 print("Hello, and welcome to the Magicalus Casino!\nYou've entered with 50 bucks, and have entered our contest. First to achieve everything in our *extensive* list wins! What's the prize? Uhhhh... self satisfaction? Doesn't matter, just start spending. \nDon't worry: there's no penalty for going into crushing, crushing debt. In fact, it's encouraged!(and necessary to win) So have fun, and hit anything to start!")
@@ -108,8 +112,8 @@ while True:
       s1t=random.randint(20,35)
       s2t=random.randint(37,52)
       s3t=random.randint(54,69)
-      slotodds=[0,1,2,3,4,5]
-      weights=[0.1,5,4,3,2,1]
+      slotnum=[0,1,2,3,4,5]
+      weights=[0.5,10,7,5,3,1]
       i=0
       while i<=8:
         slotpos[i]=random.randint(1,5)
@@ -119,16 +123,16 @@ while True:
         if s1t>runtime:
           slotpos[3]=slotpos[0]
           slotpos[0]=slotpos[6]
-          slotpos[6]=int(str(random.choices(slotodds,weights)[0
+          slotpos[6]=int(str(random.choices(slotnum,weights)[0
                          ]).replace("[",""). replace("]",""))
         if s2t>runtime:
           slotpos[4]=slotpos[1]
           slotpos[1]=slotpos[7]
-          slotpos[7]=int(str(random.choices(slotodds,weights)[0]).replace("[",""). replace("]",""))
+          slotpos[7]=int(str(random.choices(slotnum,weights)[0]).replace("[",""). replace("]",""))
         if s3t>runtime:
           slotpos[5]=slotpos[2]
           slotpos[2]=slotpos[8]
-          slotpos[8]=int(str(random.choices(slotodds,weights)[0]).replace("[",""). replace("]",""))
+          slotpos[8]=int(str(random.choices(slotnum,weights)[0]).replace("[",""). replace("]",""))
         print("╔═════╤═════╤═════╗\n║     |     |     ║\n║ ["+str(slotpos[6])+"] | ["+str(slotpos[7])+"] | ["+str(slotpos[8])+"] ║\n║     |     |     ║\n║     |     |     ║\n║ ["+str(slotpos[0])+"] | ["+str(slotpos[1])+"] | ["+str(slotpos[2])+"] ║\n║     |     |     ║\n║     |     |     ║\n║ ["+str(slotpos[3])+"] | ["+str(slotpos[4])+"] | ["+str(slotpos[5])+"] ║\n║     |     |     ║\n╚═════╧═════╧═════╝")
         time.sleep(0.075)
         if s3t>runtime:
@@ -147,13 +151,13 @@ while True:
         winning=slotpos[4]
       else:
         slotwon=False
-      if slotpos[0]==0 or slotpos[6]==0 or slotpos[3]==0 or slotpos[1]==0 or slotpos[7]==0 or slotpos[4]==0 or slotpos[2]==0 or slotpos[8]==0 or slotpos[5]==0:
+      if slotpos.count(0)>0:
         slot0check=1
-      if (slotpos[0]==0 or slotpos[0]==1) and (slotpos[6]==0 or slotpos[6]==1) and (slotpos[3]==0 or slotpos[3]==1) and (slotpos[1]==0 or slotpos[1]==1) and (slotpos[7]==0 or slotpos[7]==1) and (slotpos[4]==0 or slotpos[4]==1) and (slotpos[2]==0 or slotpos[2]==1) and (slotpos[8]==0 or slotpos[8]==1) and (slotpos[5]==0 or slotpos[5]==1):
+        if winning==0:
+          slot0check=2
+      if (slotpos.count(0)+slotpos.count(1))==9:
         bincheck=True
-      if winning==0:
-        slot0check=2
-      if slotpos[0]==slotpos[6]==slotpos[3]==slotpos[1]==slotpos[7]==slotpos[4]==slotpos[2]==slotpos[8]==slotpos[5]:
+      if all(x == slotpos[0] for x in slotpos):
         if slotpos[0]==0:
           slot0check=3
         print("Congratulations! You got a full sweep of "+str(winning)+" Your winning number will be multiplied by three!")
@@ -190,15 +194,20 @@ while True:
       cards=doubdc
       while True:
         handval=0
-        end=[False,0]
+        chandval=0
         if done==True:
           break
-        print("How much would you like to bet on this hand?(You can press enter to just bet 100)")
+        print("How much would you like to bet on this hand? You can press enter to use the regular bet, which is currently "+str(bjreg)+". You can change the regular bet by putting an r after your bet.")
         while True:
+          drawn=[False,False]
           try:
             bet=input()
             if bet=="":
-              bet=100
+              bet=bjreg
+            elif "r" in bet:
+              bet=int(bet.replace("r",""))
+              bjreg=bet
+              print("Your new regular bet is "+str(bet))
             else:
               bet=int(bet)
             break
@@ -209,39 +218,71 @@ while True:
             print("Please input a valid integer")
         if done==True:
           break
-        bal=bal-bet
         clear()
         print("Your current bet is: "+str(bet))
+        cdraw1=drawcard()
+        #print(str(cdraw1))
+        if cdraw1[2]<=10:
+          chandval+=cdraw1[2]
+        else:
+          chandval+=10
+        print(cdraw1[0]+cdraw1[1])
+        cdraw2=drawcard()
+        if cdraw2[2]<=10:
+          chandval+=cdraw2[2]
+        else:
+          chandval+=10
+        print("Hidden Card\n")
+        #print(str(chandval))
         initdraw1=drawcard()
+        if initdraw1[2]<=10:
+          handval+=initdraw1[2]
+        else:
+          handval+=10
         print(initdraw1[0]+initdraw1[1])
         initdraw2=drawcard()
+        if initdraw2[2]<=10:
+          handval+=initdraw2[2]
+        else:
+          handval+=10
         print(initdraw2[0]+initdraw2[1])
-        handval+=initdraw1[2]+initdraw2[2]+2
         if handval==21:
           print("You got a natural blackjack!")
-          end=[True,2]
         else:
           while True:
-            cards=shuffle()
-            drawn=drawcard()
-            print(drawn[0]+drawn[1])
-            handval+=drawn[2]+1
-            if handval>21:
-              print("You busted!")
-              end=[True,0]
-            if handval==21:
-              print("You got 21!")
-              end=[True,1]
+            if drawn[0]!=False:
+              print(drawn[0]+drawn[1])
+              if drawn[2]<=10:
+                handval+=drawn[2]
+              else:
+                handval+=10
+              print(str(handval))
+              if handval>21:
+                print("You busted!")
+                break
+              if handval==21:
+                print("You got 21!")
+                break
             play=input()
             if play=="back" or play=="Back":
               done=True
-            if end[0]==True:
-              clear()
+              play=input()
+            if play=="stand" or play=="Stand":
               break
-        if end<0:
-          winnings=math.floor(bet*1.5)
-          print("You won "+str(winnings)+" Magicalus bucks!")
-          bal=bal+winnings
+            cards=shuffle()
+            drawn=drawcard()
+        if handval<=21:
+          if chandval<handval and handval<22:
+            bet=math.floor(bet*1.5)
+            bal+=bet
+            print("You won "+str(bet)+" Magicalus Bucks!")
+            input()
+          else:
+            print("You tied the house and get your money back.")
+            input()
+        else:
+          bal-=bet
+          print("Oh well you lost byeee")
           input()
   elif nav=="Achievements" or nav=="achievements":
     clear()
@@ -260,7 +301,15 @@ while True:
           print(achievementlist[i].d,end=" ")
         print("Reward: ??? [X]")
       i+=1
-      continue
+    i=0
+    while i<len(egachievementlist):
+      if egachievementlist[i].a==True:
+        print("- "+egachievementlist[i].n+": "+egachievementlist[i].d+" Reward: "+egachievementlist[i].rp+" [✓]")
+      elif won==True:
+        print("- "+egachievementlist[i].n,end=": ")
+        print(" ??? ",end="")
+        print("Reward: ??? [X]")
+      i+=1
     input()
   else:
     clear()
