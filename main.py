@@ -7,6 +7,7 @@ bal=50
 handval=0
 chandval=0
 acemods=0
+cacemods=0
 done=False
 singdc=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51]
 doubdc=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103]
@@ -200,6 +201,8 @@ while True:
         print("How much would you like to bet on this hand? You can press enter to use the regular bet, which is currently "+str(bjreg)+". You can change the regular bet by putting an r after your bet.")
         while True:
           drawn=[False,False]
+          acemods=0
+          cacemods=0  
           try:
             bet=input()
             if bet=="":
@@ -235,18 +238,27 @@ while True:
         print("Hidden Card\n")
         #print(str(chandval))
         initdraw1=drawcard()
-        if initdraw1[2]<=10:
+        if initdraw1[2]==0:
+          handval+=11
+          acemods+=1
+        elif initdraw1[2]<=10:
           handval+=initdraw1[2]
         else:
           handval+=10
         print(initdraw1[0]+initdraw1[1])
         initdraw2=drawcard()
-        if initdraw2[2]<=10:
+        if initdraw2[2]==0:
+          handval+=11
+          acemods+=1
+        elif initdraw2[2]<=10:
           handval+=initdraw2[2]
         else:
           handval+=10
         print(initdraw2[0]+initdraw2[1])
-        if handval==21:
+        if handval>21:
+          acemods-=1
+          handval-=10
+        elif handval==21:
           print("You got a natural blackjack!")
         else:
           while True:
@@ -257,7 +269,10 @@ while True:
               else:
                 handval+=10
               print(str(handval))
-              if handval>21:
+              if handval>21 and acemods>0:
+                acemods-=1
+                handval-=10
+              elif handval>21:
                 print("You busted!")
                 break
               if handval==21:
@@ -272,11 +287,14 @@ while True:
             cards=shuffle()
             drawn=drawcard()
         if handval<=21:
-          if chandval<handval and handval<22:
+          if chandval<handval:
             bet=math.floor(bet*1.5)
             bal+=bet
             print("You won "+str(bet)+" Magicalus Bucks!")
             input()
+          elif chandval>handval:
+            bal-=bet
+            print("You lost "+str(bet)+" Magicalus Bucks.")
           else:
             print("You tied the house and get your money back.")
             input()
