@@ -1,5 +1,5 @@
 # Magicalus-Casino-MAIN
-An ASCII-based casino made by me. (And, of course, Stack Overflow)
+An ASCII-based casino made by Zachary ----. (And, of course, Stack Overflow)
 
 Thank you @EnderKingJ for the help publishing it.
 
