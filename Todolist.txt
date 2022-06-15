@@ -1,6 +1,9 @@
-Add in the system for secret achievements[DONE]
-Implement secret achievement Computers Count From 0 (ugh now I have to rework the slot machine again)[FINALLY DONE]
-To go with that, implememnt secret achievement You won?
-And with that, add achievements Herd Mentality and Base 1
-Add more achievements
-Add a win condition[WHY DOESNT IT PRINT PROPERLY AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA]
+Implement achievement Computers Count From 0 (ugh now I have to rework the slot machine again)[FINALLY DONE]
+Add more achievements[Never done]
+Add a win condition(WHY DOESNT IT PRINT PROPERLY AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA)[ITS DONE FINALLLLLLY]
+Add endgame achievements[Done]
+Change achievment storage method(do SOON)
+Put in the check for Not An Elevator
+Add basic casino intelligence to Black Jack[Done]
+Debug black jack v1[Done]
+Redo Black Jack to make achievements easier(maybe not right now)
