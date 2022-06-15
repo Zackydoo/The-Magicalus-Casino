@@ -37,7 +37,7 @@ def drawcard():
   return [denomsp[draw],suitsp[suit],draw+1,suit]
 def shuffle():
   if len(cards)<=26 and (game=="blackjack"):
-    return doubdc
+    return doubdc[:]
   elif len(cards)<=13:
     return [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51]
   else:
@@ -58,7 +58,7 @@ debt2=achievements("Crushing Debt", "Have 10,000 Magicalus Bucks of debt.",0,"Re
 bincheck=False
 bin=achievements("01001110 01100101 01110010 01100100 00101110", "Get all 1s and 0s on the slot machine.",0,"Binary joke here.","reward type","bincheck==True",False)
 naecheck=False
-nae=achievements("Not an Elevator","Get a match on the slot machine vertically.",0,"Horizontal Progression! OOOOOOO!","reward type","naecheck==True",False)
+nae=achievements("Not an Elevator","Get a match on the slot machine vertically.",0,"Horizontal Progression! You unlocked [Havent done thise yet]","reward type","naecheck==True",False)
 slot0check=False
 slot01=achievements("Computers Count From 0", "Have a 0 when the slot machine stops spinning.",0,"I haven't got an idea what to put here.","reward type","slot0check>=1",False)
 slot02=achievements("You win?", "Get a winning payout on the slot machines with 0s.",0,"I haven't got an idea what to put here.","reward type","slot0check>=2",False)
@@ -79,6 +79,17 @@ def achievecheck():
         pass
       continue
     i+=1
+  i=0
+  while i<len(unearnedeg):
+    x=unearnedeg[i]
+    if eval(egachievementlist[x].rq)==True:
+      print(" [Endgame Achievement unlocked!"+egachievementlist[x].n+": "+egachievementlist[x].d+" Reward: "+egachievementlist[x].rp+"]")
+      egachievementlist[x].a=True
+      del unearnedeg[i]
+      if egachievementlist[x].rt=="":
+        pass
+      continue
+    i+=1
   if len(unearned)==0 and won==False:
     clear()
     print("Congratulations! You have just completed The Magicalus Casino! I bet you feel pretty satisfied right now, eh? I hope you do, because that satisfaction is all you get. Also, I have some good news! There's more. Like, a lot more. Good luck!")
@@ -95,7 +106,7 @@ while True:
   clear()
   won=achievecheck()
   print("Welcome to the Magicalus Casino Lobby!\nYou have "+str(bal)+" Magicalus bucks")
-  print("Press 1 to hit the Slots\nPress 2 to play some Black Jack\nSay Achievements to see how you're doing.")
+  print("Press 1 to hit the Slots\nPress 2 to play some Blackjack\nSay Achievements to see how you're doing.")
   nav=input()
   if nav=="1":
     clear()
@@ -144,6 +155,8 @@ while True:
       time.sleep(2)
       clear()
       slotwon=True
+      if slotpos[6]==slotpos[0]==slotpos[3] or slotpos[7]==slotpos[1]==slotpos[4] or slotpos[8]==slotpos[2]==slotpos[5]: 
+        naecheck=True
       if slotpos[0]==slotpos[1]==slotpos[2] or slotpos[6]==slotpos[1]==slotpos[5] or slotpos[3]==slotpos[1]==slotpos[8]:
         winning=slotpos[1]
       elif slotpos[6]==slotpos[7]==slotpos[8]:
@@ -188,17 +201,19 @@ while True:
       game="blackjack"
       clear()
       won=achievecheck()
-      print("You have "+str(bal)+" Magicalus Bucks. There's no flat price, just betting.\nAll tables have 2 decks and 75% penetration.\nSay back at anytime to leave at the end of the hand(including on the winstate).\nPress enter to play, or say back to go to the casino floor.")
+      print("You have "+str(bal)+" Magicalus Bucks. There's no flat price, just betting.\nAll tables have 2 decks and 75% penetration, and dealers hit on 17.\nSay back at anytime to leave at the end of the hand(including on the winstate).\nPress enter to play, or say back to go to the casino floor.")
       back=input()
       if back=="back"or back=="Back":
         break
-      cards=doubdc
+      clear()
+      cards=doubdc[:]
       while True:
         handval=0
         chandval=0
         if done==True:
           break
-        print("How much would you like to bet on this hand? You can press enter to use the regular bet, which is currently "+str(bjreg)+". You can change the regular bet by putting an r after your bet.")
+        print("You have "+str(bal)+" Magicalus bucks")
+        print("How much would you like to bet on this hand? You can press enter to use the regular bet, which is currently "+str(bjreg)+". You can change the regular bet by putting an r after your bet. You can say back at anytime to leave at the end of the hand, and stand to take no more cards.")
         while True:
           drawn=[False,False]
           acemods=0
@@ -222,23 +237,32 @@ while True:
         if done==True:
           break
         clear()
-        print("Your current bet is: "+str(bet))
+        print("Your current bet is: "+str(bet),end="\n\n")
+        print("The house's cards are:")
         cdraw1=drawcard()
-        #print(str(cdraw1))
-        if cdraw1[2]<=10:
+        if cdraw1[2]==1:
+          chandval+=11
+          cacemods+=1
+        elif cdraw1[2]<=10:
           chandval+=cdraw1[2]
         else:
           chandval+=10
         print(cdraw1[0]+cdraw1[1])
         cdraw2=drawcard()
-        if cdraw2[2]<=10:
+        if cdraw2[2]==1:
+          chandval+=11
+          cacemods+=1
+        elif cdraw2[2]<=10:
           chandval+=cdraw2[2]
         else:
           chandval+=10
+        if chandval>21:
+          cacemods-=1
+          chandval-=10
         print("Hidden Card\n")
-        #print(str(chandval))
+        print("Your cards are:")
         initdraw1=drawcard()
-        if initdraw1[2]==0:
+        if initdraw1[2]==1:
           handval+=11
           acemods+=1
         elif initdraw1[2]<=10:
@@ -247,7 +271,7 @@ while True:
           handval+=10
         print(initdraw1[0]+initdraw1[1])
         initdraw2=drawcard()
-        if initdraw2[2]==0:
+        if initdraw2[2]==1:
           handval+=11
           acemods+=1
         elif initdraw2[2]<=10:
@@ -255,16 +279,21 @@ while True:
         else:
           handval+=10
         print(initdraw2[0]+initdraw2[1])
+        print(handval)
         if handval>21:
           acemods-=1
           handval-=10
         elif handval==21:
           print("You got a natural blackjack!")
         else:
+          print(handval)
           while True:
             if drawn[0]!=False:
               print(drawn[0]+drawn[1])
-              if drawn[2]<=10:
+              if drawn[2]==1:
+                handval+=11
+                acemods+=1
+              elif drawn[2]<=10:
                 handval+=drawn[2]
               else:
                 handval+=10
@@ -272,11 +301,8 @@ while True:
               if handval>21 and acemods>0:
                 acemods-=1
                 handval-=10
-              elif handval>21:
-                print("You busted!")
-                break
-              if handval==21:
-                print("You got 21!")
+                print(handval)
+              elif handval>21 or handval==21:
                 break
             play=input()
             if play=="back" or play=="Back":
@@ -286,22 +312,33 @@ while True:
               break
             cards=shuffle()
             drawn=drawcard()
-        if handval<=21:
-          if chandval<handval:
+          while chandval<=17 and handval<=21:
+            cdraw=drawcard()
+            chandval+=cdraw[2]
+            if cdraw2[2]==1:
+              chandval+=11
+              cacemods+=1
+            elif cdraw2[2]<=10:
+              chandval+=cdraw2[2]
+            else:
+              chandval+=10
+          if handval<=21 and chandval>21:
+            bet=math.floor(bet*1.5)
+            print("The casino busted and you won "+str(bet)+" Magicalus Bucks!")
+          elif handval>21 and chandval<=21:
+            bal-=bet
+            print("You busted and lost "+str(bet)+" Magicalus Bucks.")
+          elif chandval<handval:
             bet=math.floor(bet*1.5)
             bal+=bet
-            print("You won "+str(bet)+" Magicalus Bucks!")
-            input()
+            print("You beat the casino "+str(handval)+" to "+str(chandval)+", and you won "+str(bet)+" Magicalus Bucks!")
           elif chandval>handval:
             bal-=bet
-            print("You lost "+str(bet)+" Magicalus Bucks.")
+            print("The casino beat you "+str(chandval)+" to "+str(handval)+", and you lost "+str(bet)+" Magicalus Bucks.")
           else:
             print("You tied the house and get your money back.")
-            input()
-        else:
-          bal-=bet
-          print("Oh well you lost byeee")
           input()
+          clear()
   elif nav=="Achievements" or nav=="achievements":
     clear()
     i=0
