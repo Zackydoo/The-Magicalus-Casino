@@ -239,10 +239,12 @@ while True:
             elif -50<=bal<=50 and int(bet)>100:
               print("Your bet cannot be more then 100 when near 0 Magicalus Bucks.")
               continue
+            elif -50<=bal<=50 and int(bet)<=100:
+              break
             elif int(bet)>bal*2:
               print("Your bet cannot be more then twice your balance.")
               continue
-            elif int(bet)>math.floor(bal*-0.8):
+            elif int(bet)>math.floor(bal*-0.8) and bal<0:
               print("While in debt, you cannot bet more then 80% of your current debt at once.")
               continue
             if "r" in str(bet):
@@ -342,14 +344,14 @@ while True:
             else:
               chandval+=10
           if handval<=21 and chandval>21:
-            bet=math.floor(bet*1.5)
+            bal+=math.floor(bet/2)
             print("The casino busted and you won "+str(bet)+" Magicalus Bucks!")
           elif handval>21 and chandval<=21:
             bal-=bet
             print("You busted and lost "+str(bet)+" Magicalus Bucks.")
           elif chandval<handval:
-            bet=math.floor(bet*1.5)
-            bal+=bet
+            bal+=math.floor(bet/2)
+            print(str(bet))
             print("You beat the casino "+str(handval)+" to "+str(chandval)+", and you won "+str(bet)+" Magicalus Bucks!")
           elif chandval>handval:
             bal-=bet
