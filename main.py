@@ -60,7 +60,7 @@ class achievements:
     self.rq=rq
     self.a=a
 sweep=False
-herd=achievements("Herd Mentality", "Have every number in the slot machine be the same.",0,"x","reward type","sweep==True",False)
+herd=achievements("Herd Mentality", "Have every number in the slot machine be the same.",0,"Insert funny quip here.","reward type","sweep==True",False)
 debt1=achievements("And So Began the Debt", "Go into debt.",0,"You don't get a prize for being bad at this.","none","bal<0",False)
 debt2=achievements("Crushing Debt", "Have 10,000 Magicalus Bucks of debt.",0,"Rewards aren't finished yet, screw you.","reward type", "bal<=-10000",False)
 bincheck=False
