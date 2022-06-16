@@ -235,8 +235,9 @@ while True:
               bet=bjreg
             if "r" in str(bet):
               bet=int(bet.replace("r",""))
-              bjreg=bet
-              print("Your new regular bet is "+str(bet))
+              if bet>0:
+                bjreg=bet
+                print("Your new regular bet is "+str(bet))
             else:
               bet=int(bet)
             if int(bet)<=0:
@@ -335,32 +336,34 @@ while True:
               break
             cards=shuffle()
             drawn=drawcard()
-          while chandval<=17 and handval<=21:
-            cdraw=drawcard()
-            chandval+=cdraw[2]
-            if cdraw2[2]==1:
-              chandval+=11
-              cacemods+=1
-            elif cdraw2[2]<=10:
-              chandval+=cdraw2[2]
-            else:
-              chandval+=10
-          if handval<=21 and chandval>21:
-            bal+=math.floor(bet/2)
-            print("The casino busted and you won "+str(bet)+" Magicalus Bucks!")
-          elif handval>21 and chandval<=21:
-            bal-=int(bet)
-            print("You busted and lost "+str(bet)+" Magicalus Bucks.")
-          elif chandval<handval:
-            bal+=math.floor(int(bet)/2)
-            print("You beat the casino "+str(handval)+" to "+str(chandval)+", and you won "+str(bet)+" Magicalus Bucks!")
-          elif chandval>handval:
-            bal-=int(bet) 
-            print("The casino beat you "+str(chandval)+" to "+str(handval)+", and you lost "+str(bet)+" Magicalus Bucks.")
+        while chandval<=17 and handval<=21:
+          cdraw=drawcard()
+          chandval+=cdraw[2]
+          if cdraw2[2]==1:
+            chandval+=11
+            cacemods+=1
+          elif cdraw2[2]<=10:
+            chandval+=cdraw2[2]
           else:
-            print("You tied the house and get your money back.")
-          input()
-          clear()
+            chandval+=10
+        if handval==21:
+          print("You got a blackjack!")
+        if handval<=21 and chandval>21:
+          bal+=math.floor(bet/2)
+          print("The casino busted and you won "+str(bet)+" Magicalus Bucks!")
+        elif handval>21 and chandval<=21:
+          bal-=int(bet)
+          print("You busted and lost "+str(bet)+" Magicalus Bucks.")
+        elif chandval<handval:
+          bal+=math.floor(int(bet)/2)
+          print("You beat the casino "+str(handval)+" to "+str(chandval)+", and you won "+str(bet)+" Magicalus Bucks!")
+        elif chandval>handval:
+          bal-=int(bet) 
+          print("The casino beat you "+str(chandval)+" to "+str(handval)+", and you lost "+str(bet)+" Magicalus Bucks.")
+        else:
+          print("You tied the house and get your money back.")
+        input()
+        clear()
   elif nav=="Achievements" or nav=="achievements":
     clear()
     i=0
