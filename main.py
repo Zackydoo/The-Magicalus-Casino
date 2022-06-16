@@ -66,14 +66,14 @@ debt2=achievements("Crushing Debt", "Have 10,000 Magicalus Bucks of debt.",0,"Re
 bincheck=False
 bin=achievements("01001110 01100101 01110010 01100100 00101110", "Get all 1s and 0s on the slot machine.",0,"Binary joke here.","reward type","bincheck==True",False)
 wwcheck=False
-ww=achievements("Wrong Way","Get a match on the slot machine vertically.",0,"Horizontal Progression! You unlocked [Havent done thise yet]","reward type","wwcheck==True",False)
-slot0check=False
+ww=achievements("Wrong Way","Get a match on the slot machine vertically.",0,"Horizontal Progression! You unlocked (not programmed sorry)","reward type","wwcheck==True",False)
+slot0check=0
 slot01=achievements("Computers Count From 0", "Have a 0 when the slot machine stops spinning.",0,"I haven't got an idea what to put here.","reward type","slot0check>=1",False)
 slot02=achievements("You win?", "Get a winning payout on the slot machines with 0s.",0,"I haven't got an idea what to put here.","reward type","slot0check>=2",False)
 slot03=achievements("Base 1", "Have every number on the final slot machine be a 0.",0,"I haven't got an idea what to put here.","reward type","slot0check>=3",False)
 achievementlist=[debt1,debt2,ww,slot01]
 egachievementlist=[slot02,slot03,bin,herd]
-unearned=[0,1,2]
+unearned=[0,1,2,3]
 unearnedeg=[0,1,2,3]
 def achievecheck():
   i=0
@@ -133,7 +133,7 @@ while True:
       s2t=random.randint(37,52)
       s3t=random.randint(54,69)
       slotnum=[0,1,2,3,4,5]
-      weights=[0.5,10,7,5,3,1]
+      weights=[1,13,10,7,4,2]
       i=0
       while i<=8:
         slotpos[i]=random.randint(1,5)
