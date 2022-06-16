@@ -60,7 +60,7 @@ class achievements:
     self.rq=rq
     self.a=a
 sweep=False
-herd=achievements("Herd Mentality", "Have every number in the slot machine be the same.",0,"Insert funny quip here","reward type","sweep==True",False)
+herd=achievements("Herd Mentality", "Have every number in the slot machine be the same.",0,"x","reward type","sweep==True",False)
 debt1=achievements("And So Began the Debt", "Go into debt.",0,"You don't get a prize for being bad at this.","none","bal<0",False)
 debt2=achievements("Crushing Debt", "Have 10,000 Magicalus Bucks of debt.",0,"Rewards aren't finished yet, screw you.","reward type", "bal<=-10000",False)
 bincheck=False
@@ -69,8 +69,8 @@ wwcheck=False
 ww=achievements("Wrong Way","Get a match on the slot machine vertically.",0,"Horizontal Progression! You unlocked (not programmed sorry)","reward type","wwcheck==True",False)
 slot0check=0
 slot01=achievements("Computers Count From 0", "Have a 0 when the slot machine stops spinning.",0,"I haven't got an idea what to put here.","reward type","slot0check>=1",False)
-slot02=achievements("You win?", "Get a winning payout on the slot machines with 0s.",0,"I haven't got an idea what to put here.","reward type","slot0check>=2",False)
-slot03=achievements("Base 1", "Have every number on the final slot machine be a 0.",0,"I haven't got an idea what to put here.","reward type","slot0check>=3",False)
+slot02=achievements("You win?", "Get a winning payout on the slot machines with zeroes.",0,"I haven't got an idea what to put here.","reward type","slot0check>=2",False)
+slot03=achievements("Base 1", "Have the entire slot machine filled with zeroes.",0,"0000000","reward type","slot0check>=3",False)
 awfcheck=False
 awf=achievements("Avid Wiki Fan", "Translate the morse code on the achievements page of the Github wiki.",0,"Get prize","reward type","awfcheck==True",False)
 achievementlist=[debt1,debt2,ww,slot01]
