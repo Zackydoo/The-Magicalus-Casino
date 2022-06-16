@@ -60,21 +60,23 @@ class achievements:
     self.rq=rq
     self.a=a
 sweep=False
-herd=achievements("Herd Mentality", "Have every number in the slot machine be the same.",0,"Insert funny quip here","reward type","sweep==True",False)
+herd=achievements("Herd Mentality", "Have every number in the slot machine be the same.",0,"x","reward type","sweep==True",False)
 debt1=achievements("And So Began the Debt", "Go into debt.",0,"You don't get a prize for being bad at this.","none","bal<0",False)
 debt2=achievements("Crushing Debt", "Have 10,000 Magicalus Bucks of debt.",0,"Rewards aren't finished yet, screw you.","reward type", "bal<=-10000",False)
 bincheck=False
 bin=achievements("01001110 01100101 01110010 01100100 00101110", "Get all 1s and 0s on the slot machine.",0,"Binary joke here.","reward type","bincheck==True",False)
 wwcheck=False
-ww=achievements("Wrong Way","Get a match on the slot machine vertically.",0,"Horizontal Progression! You unlocked [Havent done thise yet]","reward type","wwcheck==True",False)
-slot0check=False
+ww=achievements("Wrong Way","Get a match on the slot machine vertically.",0,"Horizontal Progression! You unlocked (not programmed sorry)","reward type","wwcheck==True",False)
+slot0check=0
 slot01=achievements("Computers Count From 0", "Have a 0 when the slot machine stops spinning.",0,"I haven't got an idea what to put here.","reward type","slot0check>=1",False)
-slot02=achievements("You win?", "Get a winning payout on the slot machines with 0s.",0,"I haven't got an idea what to put here.","reward type","slot0check>=2",False)
-slot03=achievements("Base 1", "Have every number on the final slot machine be a 0.",0,"I haven't got an idea what to put here.","reward type","slot0check>=3",False)
+slot02=achievements("You win?", "Get a winning payout on the slot machines with zeroes.",0,"I haven't got an idea what to put here.","reward type","slot0check>=2",False)
+slot03=achievements("Base 1", "Have the entire slot machine filled with zeroes.",0,"0000000","reward type","slot0check>=3",False)
+awfcheck=False
+awf=achievements("Avid Wiki Fan", "Translate the morse code on the achievements page of the Github wiki.",0,"Get prize","reward type","awfcheck==True",False)
 achievementlist=[debt1,debt2,ww,slot01]
-egachievementlist=[slot02,slot03,bin,herd]
-unearned=[0,1,2]
-unearnedeg=[0,1,2,3]
+egachievementlist=[slot02,slot03,bin,herd,awf]
+unearned=[0,1,2,3]
+unearnedeg=[0,1,2,3,4]
 def achievecheck():
   i=0
   while i<len(unearned):
@@ -91,7 +93,7 @@ def achievecheck():
   while i<len(unearnedeg):
     x=unearnedeg[i]
     if eval(egachievementlist[x].rq)==True:
-      print(" [Endgame Achievement unlocked!"+egachievementlist[x].n+": "+egachievementlist[x].d+" Reward: "+egachievementlist[x].rp+"]")
+      print(" [Endgame Achievement unlocked! "+egachievementlist[x].n+": "+egachievementlist[x].d+" Reward: "+egachievementlist[x].rp+"]")
       egachievementlist[x].a=True
       del unearnedeg[i]
       if egachievementlist[x].rt=="":
@@ -133,7 +135,7 @@ while True:
       s2t=random.randint(37,52)
       s3t=random.randint(54,69)
       slotnum=[0,1,2,3,4,5]
-      weights=[0.5,10,7,5,3,1]
+      weights=[1,13,10,7,4,2]
       i=0
       while i<=8:
         slotpos[i]=random.randint(1,5)
@@ -231,24 +233,29 @@ while True:
             bet=input()
             if bet=="":
               bet=bjreg
+            if "r" in str(bet):
+              bet=int(bet.replace("r",""))
+              if bet>0:
+                bjreg=bet
+                print("Your new regular bet is "+str(bet))
+            else:
+              bet=int(bet)
             if int(bet)<=0:
               print("Your bet cannot be negative")
               continue
             elif -50<=bal<=50 and int(bet)>100:
               print("Your bet cannot be more then 100 when near 0 Magicalus Bucks.")
               continue
+            elif -50<=bal<=50 and int(bet)<=100:
+              break
+            elif int(bet)>math.floor(bal*-0.8) and bal<0:
+              print("While in debt, you cannot bet more then 80% of your current debt at once.")
+              continue
+            elif int(bet)<math.floor(bal*-0.8) and bal<0:
+              break
             elif int(bet)>bal*2:
               print("Your bet cannot be more then twice your balance.")
               continue
-            elif int(bet)>math.floor(bal*-0.8):
-              print("While in debt, you cannot bet more then 80% of your current debt at once.")
-              continue
-            if "r" in str(bet):
-              bet=int(bet.replace("r",""))
-              bjreg=bet
-              print("Your new regular bet is "+str(bet))
-            else:
-              bet=int(bet)
             break
           except ValueError:
             if bet=="back" or bet=="Back":
@@ -329,33 +336,34 @@ while True:
               break
             cards=shuffle()
             drawn=drawcard()
-          while chandval<=17 and handval<=21:
-            cdraw=drawcard()
-            chandval+=cdraw[2]
-            if cdraw2[2]==1:
-              chandval+=11
-              cacemods+=1
-            elif cdraw2[2]<=10:
-              chandval+=cdraw2[2]
-            else:
-              chandval+=10
-          if handval<=21 and chandval>21:
-            bet=math.floor(bet*1.5)
-            print("The casino busted and you won "+str(bet)+" Magicalus Bucks!")
-          elif handval>21 and chandval<=21:
-            bal-=bet
-            print("You busted and lost "+str(bet)+" Magicalus Bucks.")
-          elif chandval<handval:
-            bet=math.floor(bet*1.5)
-            bal+=bet
-            print("You beat the casino "+str(handval)+" to "+str(chandval)+", and you won "+str(bet)+" Magicalus Bucks!")
-          elif chandval>handval:
-            bal-=bet
-            print("The casino beat you "+str(chandval)+" to "+str(handval)+", and you lost "+str(bet)+" Magicalus Bucks.")
+        while chandval<=17 and handval<=21:
+          cdraw=drawcard()
+          chandval+=cdraw[2]
+          if cdraw2[2]==1:
+            chandval+=11
+            cacemods+=1
+          elif cdraw2[2]<=10:
+            chandval+=cdraw2[2]
           else:
-            print("You tied the house and get your money back.")
-          input()
-          clear()
+            chandval+=10
+        if handval==21:
+          print("You got a blackjack!")
+        if handval<=21 and chandval>21:
+          bal+=math.floor(bet/2)
+          print("The casino busted and you won "+str(bet)+" Magicalus Bucks!")
+        elif handval>21 and chandval<=21:
+          bal-=int(bet)
+          print("You busted and lost "+str(bet)+" Magicalus Bucks.")
+        elif chandval<handval:
+          bal+=math.floor(int(bet)/2)
+          print("You beat the casino "+str(handval)+" to "+str(chandval)+", and you won "+str(bet)+" Magicalus Bucks!")
+        elif chandval>handval:
+          bal-=int(bet) 
+          print("The casino beat you "+str(chandval)+" to "+str(handval)+", and you lost "+str(bet)+" Magicalus Bucks.")
+        else:
+          print("You tied the house and get your money back.")
+        input()
+        clear()
   elif nav=="Achievements" or nav=="achievements":
     clear()
     i=0
@@ -375,6 +383,9 @@ while True:
         print("Reward: ??? [X]")
       i+=1
     input()
+  elif nav=="magicalus" or nav=="Magicalus":
+    awfcheck=True
+    continue
   else:
     clear()
     print("Theres nothing here. Hit enter to go back.")
