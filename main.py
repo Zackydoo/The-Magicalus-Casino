@@ -233,6 +233,12 @@ while True:
             bet=input()
             if bet=="":
               bet=bjreg
+            if "r" in str(bet):
+              bet=int(bet.replace("r",""))
+              bjreg=bet
+              print("Your new regular bet is "+str(bet))
+            else:
+              bet=int(bet)
             if int(bet)<=0:
               print("Your bet cannot be negative")
               continue
@@ -241,18 +247,14 @@ while True:
               continue
             elif -50<=bal<=50 and int(bet)<=100:
               break
-            elif int(bet)>bal*2:
-              print("Your bet cannot be more then twice your balance.")
-              continue
             elif int(bet)>math.floor(bal*-0.8) and bal<0:
               print("While in debt, you cannot bet more then 80% of your current debt at once.")
               continue
-            if "r" in str(bet):
-              bet=int(bet.replace("r",""))
-              bjreg=bet
-              print("Your new regular bet is "+str(bet))
-            else:
-              bet=int(bet)
+            elif int(bet)<math.floor(bal*-0.8) and bal<0:
+              break
+            elif int(bet)>bal*2:
+              print("Your bet cannot be more then twice your balance.")
+              continue
             break
           except ValueError:
             if bet=="back" or bet=="Back":
@@ -347,14 +349,13 @@ while True:
             bal+=math.floor(bet/2)
             print("The casino busted and you won "+str(bet)+" Magicalus Bucks!")
           elif handval>21 and chandval<=21:
-            bal-=bet
+            bal-=int(bet)
             print("You busted and lost "+str(bet)+" Magicalus Bucks.")
           elif chandval<handval:
-            bal+=math.floor(bet/2)
-            print(str(bet))
+            bal+=math.floor(int(bet)/2)
             print("You beat the casino "+str(handval)+" to "+str(chandval)+", and you won "+str(bet)+" Magicalus Bucks!")
           elif chandval>handval:
-            bal-=bet
+            bal-=int(bet) 
             print("The casino beat you "+str(chandval)+" to "+str(handval)+", and you lost "+str(bet)+" Magicalus Bucks.")
           else:
             print("You tied the house and get your money back.")
