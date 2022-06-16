@@ -71,10 +71,12 @@ slot0check=0
 slot01=achievements("Computers Count From 0", "Have a 0 when the slot machine stops spinning.",0,"I haven't got an idea what to put here.","reward type","slot0check>=1",False)
 slot02=achievements("You win?", "Get a winning payout on the slot machines with 0s.",0,"I haven't got an idea what to put here.","reward type","slot0check>=2",False)
 slot03=achievements("Base 1", "Have every number on the final slot machine be a 0.",0,"I haven't got an idea what to put here.","reward type","slot0check>=3",False)
+awfcheck=False
+awf=achievements("Avid Wiki Fan", "Translate the morse code on the achievements page of the Github wiki.",0,"Get prize","reward type","awfcheck==True",False)
 achievementlist=[debt1,debt2,ww,slot01]
-egachievementlist=[slot02,slot03,bin,herd]
+egachievementlist=[slot02,slot03,bin,herd,awf]
 unearned=[0,1,2,3]
-unearnedeg=[0,1,2,3]
+unearnedeg=[0,1,2,3,4]
 def achievecheck():
   i=0
   while i<len(unearned):
@@ -91,7 +93,7 @@ def achievecheck():
   while i<len(unearnedeg):
     x=unearnedeg[i]
     if eval(egachievementlist[x].rq)==True:
-      print(" [Endgame Achievement unlocked!"+egachievementlist[x].n+": "+egachievementlist[x].d+" Reward: "+egachievementlist[x].rp+"]")
+      print(" [Endgame Achievement unlocked! "+egachievementlist[x].n+": "+egachievementlist[x].d+" Reward: "+egachievementlist[x].rp+"]")
       egachievementlist[x].a=True
       del unearnedeg[i]
       if egachievementlist[x].rt=="":
@@ -375,6 +377,9 @@ while True:
         print("Reward: ??? [X]")
       i+=1
     input()
+  elif nav=="magicalus" or nav=="Magicalus":
+    awfcheck=True
+    continue
   else:
     clear()
     print("Theres nothing here. Hit enter to go back.")
