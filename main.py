@@ -3,12 +3,20 @@ import time
 import math
 from os import system, name
 won=False
-bal=50
+bal=100
 handval=0
 chandval=0
 acemods=0
 cacemods=0
 done=False
+def ignoreinput():
+  try:
+    import msvcrt
+    while msvcrt.kbhit():
+      msvcrt.getch()
+  except ImportError:
+    import sys, termios 
+    termios.tcflush(sys.stdin, termios.TCIOFLUSH)
 singdc=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51]
 doubdc=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103]
 slotpos=[0,1,2,3,4,5,6,7,8]
@@ -57,13 +65,13 @@ debt1=achievements("And So Began the Debt", "Go into debt.",0,"You don't get a p
 debt2=achievements("Crushing Debt", "Have 10,000 Magicalus Bucks of debt.",0,"Rewards aren't finished yet, screw you.","reward type", "bal<=-10000",False)
 bincheck=False
 bin=achievements("01001110 01100101 01110010 01100100 00101110", "Get all 1s and 0s on the slot machine.",0,"Binary joke here.","reward type","bincheck==True",False)
-naecheck=False
-nae=achievements("Not an Elevator","Get a match on the slot machine vertically.",0,"Horizontal Progression! You unlocked [Havent done thise yet]","reward type","naecheck==True",False)
+wwcheck=False
+ww=achievements("Wrong Way","Get a match on the slot machine vertically.",0,"Horizontal Progression! You unlocked [Havent done thise yet]","reward type","wwcheck==True",False)
 slot0check=False
 slot01=achievements("Computers Count From 0", "Have a 0 when the slot machine stops spinning.",0,"I haven't got an idea what to put here.","reward type","slot0check>=1",False)
 slot02=achievements("You win?", "Get a winning payout on the slot machines with 0s.",0,"I haven't got an idea what to put here.","reward type","slot0check>=2",False)
 slot03=achievements("Base 1", "Have every number on the final slot machine be a 0.",0,"I haven't got an idea what to put here.","reward type","slot0check>=3",False)
-achievementlist=[debt1,debt2,nae,slot01]
+achievementlist=[debt1,debt2,ww,slot01]
 egachievementlist=[slot02,slot03,bin,herd]
 unearned=[0,1,2]
 unearnedeg=[0,1,2,3]
@@ -92,7 +100,7 @@ def achievecheck():
     i+=1
   if len(unearned)==0 and won==False:
     clear()
-    print("Congratulations! You have just completed The Magicalus Casino! I bet you feel pretty satisfied right now, eh? I hope you do, because that satisfaction is all you get. Also, I have some good news! There's more. Like, a lot more. Good luck!")
+    print("Congratulations! You have just completed The Magicalus Casino! \nI bet you feel pretty satisfied right now, eh? \nI hope you do, because that satisfaction is all you get. Also, I have some good news! \nThere's more. Like, a lot more. \nGood luck!")
     input()
     clear()
     return True
@@ -100,7 +108,7 @@ def achievecheck():
     return True
   return False
 clear()
-print("Hello, and welcome to the Magicalus Casino!\nYou've entered with 50 bucks, and have entered our contest. First to achieve everything in our *extensive* list wins! What's the prize? Uhhhh... self satisfaction? Doesn't matter, just start spending. \nDon't worry: there's no penalty for going into crushing, crushing debt. In fact, it's encouraged!(and necessary to win) So have fun, and hit anything to start!")
+print("Hello, and welcome to the Magicalus Casino!\nYou've come to our casino with "+str(bal)+" bucks, and have entered our contest. \nFirst to achieve everything in our *extensive* list wins! \nWhat's the prize? Uhhhh... self satisfaction? Doesn't matter, just start spending. \nDon't worry: there's no penalty for going into crushing, crushing debt. \nIn fact, it's encouraged!(and necessary to win) \nSo have fun, and hit enter to start!\n(Note: this game runs in python, so all inputs require you to hit return)")
 input()
 while True:
   clear()
@@ -156,7 +164,7 @@ while True:
       clear()
       slotwon=True
       if slotpos[6]==slotpos[0]==slotpos[3] or slotpos[7]==slotpos[1]==slotpos[4] or slotpos[8]==slotpos[2]==slotpos[5]: 
-        naecheck=True
+        wwcheck=True
       if slotpos[0]==slotpos[1]==slotpos[2] or slotpos[6]==slotpos[1]==slotpos[5] or slotpos[3]==slotpos[1]==slotpos[8]:
         winning=slotpos[1]
       elif slotpos[6]==slotpos[7]==slotpos[8]:
@@ -187,6 +195,7 @@ while True:
       won=achievecheck()
       print("You have "+str(bal)+" Magicalus bucks")
       print("Say back to leave, or say anything else to spin the wheels again!")
+      ignoreinput()
       back=input()
       if back=="back" or back=="Back":
         break
@@ -201,7 +210,7 @@ while True:
       game="blackjack"
       clear()
       won=achievecheck()
-      print("You have "+str(bal)+" Magicalus Bucks. There's no flat price, just betting.\nAll tables have 2 decks and 75% penetration, and dealers hit on 17.\nSay back at anytime to leave at the end of the hand(including on the winstate).\nPress enter to play, or say back to go to the casino floor.")
+      print("You have "+str(bal)+" Magicalus Bucks. There's no flat price, just betting.\nAll tables have 2 decks and 75% penetration, and dealers hit on 17.\nSay back at anytime to leave at the end of the hand.\nPress enter to play, or say back to go to the casino floor.")
       back=input()
       if back=="back"or back=="Back":
         break
@@ -213,7 +222,7 @@ while True:
         if done==True:
           break
         print("You have "+str(bal)+" Magicalus bucks")
-        print("How much would you like to bet on this hand? You can press enter to use the regular bet, which is currently "+str(bjreg)+". You can change the regular bet by putting an r after your bet. You can say back at anytime to leave at the end of the hand, and stand to take no more cards.")
+        print("How much would you like to bet on this hand? \nYou can press enter to use the regular bet, which is currently "+str(bjreg)+". \nYou can change the regular bet by putting an r after your bet. \nSay stand to take no more cards and end the hand.")
         while True:
           drawn=[False,False]
           acemods=0
@@ -222,7 +231,19 @@ while True:
             bet=input()
             if bet=="":
               bet=bjreg
-            elif "r" in bet:
+            if int(bet)<=0:
+              print("Your bet cannot be negative")
+              continue
+            elif -50<=bal<=50 and int(bet)>100:
+              print("Your bet cannot be more then 100 when near 0 Magicalus Bucks.")
+              continue
+            elif int(bet)>bal*2:
+              print("Your bet cannot be more then twice your balance.")
+              continue
+            elif int(bet)>math.floor(bal*-0.8):
+              print("While in debt, you cannot bet more then 80% of your current debt at once.")
+              continue
+            if "r" in str(bet):
               bet=int(bet.replace("r",""))
               bjreg=bet
               print("Your new regular bet is "+str(bet))
@@ -279,14 +300,12 @@ while True:
         else:
           handval+=10
         print(initdraw2[0]+initdraw2[1])
-        print(handval)
         if handval>21:
           acemods-=1
           handval-=10
         elif handval==21:
           print("You got a natural blackjack!")
         else:
-          print(handval)
           while True:
             if drawn[0]!=False:
               print(drawn[0]+drawn[1])
@@ -297,11 +316,9 @@ while True:
                 handval+=drawn[2]
               else:
                 handval+=10
-              print(str(handval))
               if handval>21 and acemods>0:
                 acemods-=1
                 handval-=10
-                print(handval)
               elif handval>21 or handval==21:
                 break
             play=input()
@@ -346,15 +363,7 @@ while True:
       if achievementlist[i].a==True:
         print("- "+achievementlist[i].n+": "+achievementlist[i].d+" Reward: "+achievementlist[i].rp+" [✓]")
       else:
-        if achievementlist[i].sn==True:
-          print("- ???: ",end="")
-        else:
-          print("- "+achievementlist[i].n,end=": ")
-        if achievementlist[i].sd==True:
-          print(" ??? ",end="")
-        else:
-          print(achievementlist[i].d,end=" ")
-        print("Reward: ??? [X]")
+        print("- "+achievementlist[i].n+": ??? Reward: ??? [X]")
       i+=1
     i=0
     while i<len(egachievementlist):
